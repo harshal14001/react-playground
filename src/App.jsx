@@ -1,4 +1,4 @@
-import Meals from "./Meals";
+import Meals from "../src/components/Meals";
 
 const App = () => {
   return <Meals />;
