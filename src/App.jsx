@@ -1,7 +1,7 @@
-import Meals from "../src/components/Meals";
+import Form from "./components/Form";
 
 const App = () => {
-  return <Meals />;
+  return <Form />;
 };
 
 export default App;
