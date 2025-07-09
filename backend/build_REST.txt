@@ -1,0 +1,9 @@
+GET /users - HTML Document Render    - Done
+GET /api/users - list all users JSON   - Done
+
+Dynamic PAth parameter
+GET/api/users/:id
+:id - > variable | Dynamic          - Done
+
+
+POST/api/users

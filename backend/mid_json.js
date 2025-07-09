@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
 
 // Basic route
 app.get('/', (req, res) => {
-    res.send('Welcome!');
+    res.send('Welcome!'); 
 });
 
 // Route user
