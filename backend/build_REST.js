@@ -1,8 +1,15 @@
 import express from 'express';
 import users from './Data/mock_data_build_REST.json' assert { type: "json" };
+import fs from "fs";
+
 
 const app = express();
 const port = 8000;
+
+//- add plugin ie middleware to work on data sent from postman>post>urlencoded
+
+app.use(express.urlencoded({extended:false}));
+// -
 
 // Routes
 // 1. see data is HTML, suitable browser etc
@@ -32,32 +39,56 @@ app.get("/api/users/:id",(req,res)=>{
   
 //4. for same routes but differnt methode we will work below
 // check 3
-// done Grouping
+// done Grouping   
 
 app
     .route("/api/users/:id")
 
-    .get((req,res)=>{
-        const id = req.params.id;
-        const user = users.find((user)=>user.id===Number(id)); // find user by id which match searched
-        return res.json(user);
-    })
-    
-    .patch((req,res)=>{
-        // edit user with ID
-        return res.json({status: "pending"});
-    })
-    
-    .delete((req,res)=>{
-        // delete user with ID
-        return res.json({status: "pending"});
+        .get((req,res)=>{
+            const id = req.params.id;
+            const user = users.find((user)=>user.id===Number(id)); // find user by id which match searched
+            return res.json(user);
+        })
 
-    })
+        .patch((req,res)=>{
+            // edit user with ID
+            return res.json({status: "pending"});
+        })
+    
+        // delete user with ID
+        
+        .delete( (req, res) => {
+        const id = Number(req.params.id);
+        const userIndex = users.findIndex((user) => user.id === id);
+
+        if (userIndex === -1) {
+          return res.status(404).json({ status: "User not found" });
+        }
+
+        users.splice(userIndex, 1); // remove the user
+
+        // Write updated users array back to the JSON file
+        fs.writeFile('./Data/mock_data_build_REST.json', JSON.stringify(users), (err) => {
+          if (err) {
+            return res.status(500).json({ status: "Error deleting user" });
+          }
+          return res.json({ status: "Deleted", id });
+        });
+});
 
 // 5. 
 app.post("/api/users",(req,res)=>{
     // Create new user
-    return res.json({status: "pending"});
+    const body = req.body; // data sent from frontend is available in req.body
+    
+    // console.log("body:",body);// here we can reciece the post but to append in file we need to ude fs mod
+   
+    users.push({...body,id:users.length+1}); // append in file but problm is we need to write in file also (usnig fs module) 
+   
+    fs.writeFile('./Data/mock_data_build_REST.json',JSON.stringify(users),(err,data)=>{
+       return res.json({status: "Sucess",id:users.length});
+       
+    })
 
 });
 
