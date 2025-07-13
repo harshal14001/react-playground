@@ -1,6 +1,7 @@
 import express from 'express';
 import users from './Data/mock_data_build_REST.json' assert { type: "json" };
 import fs from "fs";
+import { error } from 'console';
 
 
 const app = express();
@@ -47,13 +48,16 @@ app
         .get((req,res)=>{
             const id = req.params.id;
             const user = users.find((user)=>user.id===Number(id)); // find user by id which match searched
+            if(!users){
+              return res.status(404).json({error:"User not found"}) // status handle
+            }
             return res.json(user);
         })
 
         .patch((req,res)=>{
-            // edit user with ID
+            // edit user with ID 
             return res.json({status: "pending"});
-        })
+        }) 
     
         // delete user with ID
         
@@ -81,12 +85,15 @@ app.post("/api/users",(req,res)=>{
     // Create new user
     const body = req.body; // data sent from frontend is available in req.body
     
+    if (!body || !body.first_name || !body.last_name || !body.email || !body.gender  || !body.job_title)
+        return res.status(400).json({msg:"all fields are requied"})
+      
     // console.log("body:",body);// here we can reciece the post but to append in file we need to ude fs mod
    
     users.push({...body,id:users.length+1}); // append in file but problm is we need to write in file also (usnig fs module) 
    
     fs.writeFile('./Data/mock_data_build_REST.json',JSON.stringify(users),(err,data)=>{
-       return res.json({status: "Sucess",id:users.length});
+       return res.status(201).json({status: "Sucess",id:users.length}); // added status code 201 means creare user
        
     })
 
