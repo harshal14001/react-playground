@@ -96,8 +96,7 @@ app.post("/api/users",(req,res)=>{
        return res.status(201).json({status: "Sucess",id:users.length}); // added status code 201 means creare user
        
     })
-
 });
 
-
+ 
 app.listen(port,()=>console.log(`server started at port:${port} `));
