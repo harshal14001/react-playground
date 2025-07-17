@@ -1,4 +1,5 @@
 // code is polluted and need refactoring so we'll be doin MVC for industry standards
+// see index.js and routes/user.js
 
 
 // working with mongo Database 
@@ -54,7 +55,7 @@ app.get("/users", async (req, res) => {
         ${alldbUsers
         .map((user) => `<li>${user.firstName} - ${user.email}</li>`)
         .join("")}
-    </ul>
+    </ul> 
     `;
     res.send(html);
 });  
