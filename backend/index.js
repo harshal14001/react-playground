@@ -1,22 +1,29 @@
 import express from 'express';
-import mongoose from 'mongoose';
 
-//
+// mongo connection from connection.js
+import {connectMongoDb} from './connection';
+import {logReqRes} from "./middlewares" // here no need to say /index infront bcoz it knows
 import userRouter from './routes/user'
 
 const app = express();
 const port = 8000;
 
-
-app.use(express.json());  // REQUIRED to parse JSON from Postman
-app.use(express.urlencoded({ extended: true }));  // for application/x-www-form-urlencoded
+// connection
+connectMongoDb("mongodb://127.0.0.1:27017/react-app-1")
 
  
-// connnection , this can be also put in seperate file
-mongoose
-    .connect('mongodb://127.0.0.1:27017/react-app-1')
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.log("Mongo Error", err))
+// connnection in single file but we will do seperately , generally we put in seperate file
+//  see in connection.js  
+// mongoose
+//     .connect('mongodb://127.0.0.1:27017/react-app-1')
+//     .then(() => console.log("MongoDB connected"))
+//     .catch((err) => console.log("Mongo Error", err))
+
+// middleware - plugin
+app.use(express.urlencoded({ extended: false }));  // for application/x-www-form-urlencoded
+
+// access middleware from seperate folder middleware>index.js
+app.use(logReqRes("log.txt"));
 
 // Routes 
 app.use("/user",userRouter); // if there is any request at '/user' then use userRouter

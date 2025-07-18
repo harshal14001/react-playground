@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-
+import {handleGetAllUsers} from "../controllers/user";
 
 // i ve removed /user from everywhere from code compared to previous files
 // get request on '/' then wil get all users
@@ -19,11 +19,13 @@ const router = express.Router();
 // });  
 
 
-
-router.get("/", async (req, res) => {
-    const alldbUsers = await User.find({});
-    return res.json(alldbUsers);
-});
+// we are seperating this in controller > index.js ,
+// bellow commented 2 lines are basically controllers arn are used in controller > index.js
+router.get("/", handleGetAllUsers) ;
+  //=> {
+    // const alldbUsers = await User.find({});
+    // return res.json(alldbUsers);
+//});
 
 router
     .route(" /:id")

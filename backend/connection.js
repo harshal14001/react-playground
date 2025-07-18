@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
+// we've created different connection file of database from backend>index.js line no 12
 // connection
-async function connectMongoDb(){
-    return  mongoose.connect('mongodb://127.0.0.1:27017/react-app-1')
+async function connectMongoDb(url){
+    return  mongoose.connect(url)
 }
 module.exports={
-    connectMongoDb,
+    connectMongoDb
 }; 
