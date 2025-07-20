@@ -1,10 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-// we've created different connection file of database from backend>index.js line no 12
-// connection
-async function connectMongoDb(url){
-    return  mongoose.connect(url)
-}
-module.exports={
-    connectMongoDb
-}; 
+const connectMongoDb = async (url) => {
+  try {
+    await mongoose.connect(url);
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.log("Mongo Error:", error);
+  }
+};
+
+export default connectMongoDb;

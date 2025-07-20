@@ -1,9 +1,12 @@
 import express from 'express';
 
 // mongo connection from connection.js
-import {connectMongoDb} from './connection';
-import {logReqRes} from "./middlewares" // here no need to say /index infront bcoz it knows
-import userRouter from './routes/user'
+import connectMongoDb from "./connection.js";
+
+import logReqRes from "./middlewares/index.js"; // here no need to say /index in front bcoz it knows
+import userRouter from "./routes/user.js";
+
+
 
 const app = express();
 const port = 8000;
@@ -11,7 +14,6 @@ const port = 8000;
 // connection
 connectMongoDb("mongodb://127.0.0.1:27017/react-app-1")
 
- 
 // connnection in single file but we will do seperately , generally we put in seperate file
 //  see in connection.js  
 // mongoose
@@ -26,6 +28,6 @@ app.use(express.urlencoded({ extended: false }));  // for application/x-www-form
 app.use(logReqRes("log.txt"));
 
 // Routes 
-app.use("/user",userRouter); // if there is any request at '/user' then use userRouter
- 
+app.use("/user", userRouter); // if there is any request at '/user' then use userRouter
+
 app.listen(port, () => console.log(`server started a port:${port}`));
