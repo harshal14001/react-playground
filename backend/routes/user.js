@@ -20,11 +20,13 @@ import {getAllUsers, getUserById, addUser, editUser, deleteUser } from "../contr
 
 // we are seperating this in controller > index.js ,
 // bellow commented 2 lines are basically controllers arn are used in controller > index.js
-router.get("/", getAllUsers); // refactored route
+// router.get("/", getAllUsers); // refactored route
 //=> { 
 // const alldbUsers = await User.find({});
 // return res.json(alldbUsers);
 //});
+
+router.route("/").get(getAllUsers .post(addUser))
 
 router
   .route("/:id")
@@ -74,9 +76,8 @@ router
 
 //   return res.status(201).json({ msg: "Success", user: result });
 // });
-router.post("/", addUser);
+// router.post("/", addUser);
 
-// here get and post are on same path, so we can group them see below
-// router.route("/").get(getAllUsers .post(adduser)))
+
 
 export default router;

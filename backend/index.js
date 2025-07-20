@@ -28,6 +28,6 @@ app.use(express.urlencoded({ extended: false }));  // for application/x-www-form
 app.use(logReqRes("log.txt"));
 
 // Routes 
-app.use("/user", userRouter); // if there is any request at '/user' then use userRouter
+app.use("api/users", userRouter); // if there is any request at '/user' then use userRouter
 
 app.listen(port, () => console.log(`server started a port:${port}`));
