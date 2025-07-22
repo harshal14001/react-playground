@@ -6,7 +6,8 @@ import connectMongoDb from "./connection.js";
 import logReqRes from "./middlewares/index.js"; // here no need to say /index in front bcoz it knows
 import userRouter from "./routes/user.js";
 
-
+// auth route
+import userRouter from "./routes/auth-user.js"  
 
 const app = express();
 const port = 8000;
@@ -29,5 +30,8 @@ app.use(logReqRes("log.txt"));
 
 // Routes 
 app.use("api/users", userRouter); // if there is any request at '/user' then use userRouter
+
+// auth - route
+app.use("/auth-user",userRouter);
 
 app.listen(port, () => console.log(`server started a port:${port}`));
